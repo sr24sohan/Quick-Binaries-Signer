@@ -1,0 +1,60 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{0EAA2320-F9D5-4329-9B43-EEE682392BEF}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="Units\QBSigner.dproj">
+            <Dependencies>Units\QBUtility.dproj;Units\QBSignerHelper.dproj</Dependencies>
+        </Projects>
+        <Projects Include="Units\QBUtility.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Units\QBSignerHelper.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="QBSigner" DependsOnTargets="QBUtility;QBSignerHelper">
+        <MSBuild Projects="Units\QBSigner.dproj"/>
+    </Target>
+    <Target Name="QBSigner:Clean" DependsOnTargets="QBUtility:Clean;QBSignerHelper:Clean">
+        <MSBuild Projects="Units\QBSigner.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="QBSigner:Make" DependsOnTargets="QBUtility:Make;QBSignerHelper:Make">
+        <MSBuild Projects="Units\QBSigner.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="QBUtility">
+        <MSBuild Projects="Units\QBUtility.dproj"/>
+    </Target>
+    <Target Name="QBUtility:Clean">
+        <MSBuild Projects="Units\QBUtility.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="QBUtility:Make">
+        <MSBuild Projects="Units\QBUtility.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="QBSignerHelper">
+        <MSBuild Projects="Units\QBSignerHelper.dproj"/>
+    </Target>
+    <Target Name="QBSignerHelper:Clean">
+        <MSBuild Projects="Units\QBSignerHelper.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="QBSignerHelper:Make">
+        <MSBuild Projects="Units\QBSignerHelper.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="QBSigner;QBUtility;QBSignerHelper"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="QBSigner:Clean;QBUtility:Clean;QBSignerHelper:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="QBSigner:Make;QBUtility:Make;QBSignerHelper:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>
